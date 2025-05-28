@@ -14,7 +14,7 @@ namespace Matching_RPG.Implementation_Classes
 		public static readonly int TileSize = 48;
 
 		public int ID { get; set; }
-		public Niglet PlacedNiglet;
+		public Cuby PlacedCuby;
         public Tile()
         {
 			

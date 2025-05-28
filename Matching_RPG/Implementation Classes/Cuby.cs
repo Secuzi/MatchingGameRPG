@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Matching_RPG.Implementation_Classes
 {
-	public class Niglet : SolidObject, IDisposable
+	public class Cuby : SolidObject, IDisposable
 	{
         public int ID { get; set; }
         public bool IsPicked { get; set; }
@@ -16,9 +16,9 @@ namespace Matching_RPG.Implementation_Classes
 		public bool IsSkull { get; set; }
 
 
-		public Niglet(int x, int y, int width, int height, string path)
+		public Cuby(int x, int y, int width, int height, string path)
 		{
-			ObjectImage = Image.FromFile($"Niglets/{path}.png");
+			ObjectImage = Image.FromFile($"Cubies/{path}.png");
 			ObjectPositionX = x;
 			ObjectPositionY = y;
 			ObjectWidth = width;
@@ -30,11 +30,11 @@ namespace Matching_RPG.Implementation_Classes
 			e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 			e.Graphics.DrawImage(ObjectImage, ObjectPositionX, ObjectPositionY, ObjectWidth, ObjectHeight);
 		}
-		public Niglet()
+		public Cuby()
         {
-			int nigletSize = 36;
-			this.ObjectHeight = nigletSize;
-			this.ObjectWidth = nigletSize;
+			int cubySize = 36;
+			this.ObjectHeight = cubySize;
+			this.ObjectWidth = cubySize;
             
 		}
 
@@ -58,7 +58,7 @@ namespace Matching_RPG.Implementation_Classes
 		}
 
 		// Finalizer
-		~Niglet()
+		~Cuby()
 		{
 			Dispose(false);
 		}

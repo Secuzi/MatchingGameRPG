@@ -32,7 +32,7 @@ namespace Matching_RPG.ClickBehaviors
                 GameLevels.Hide();
                 if (EasyGame.IsDisposed)
                 {
-                    EasyGame = new Game(instanceOfSkulls: 1, numberOfNiglets: 9, gameLevelsForm: GameLevels);
+                    EasyGame = new Game(instanceOfSkulls: 1, numberOfCubies: 9, gameLevelsForm: GameLevels);
                     EasyGame.Cursor = new Cursor(Resources.defaultIcon.Handle);
                     EasyGame.ShowDialog();
                 }

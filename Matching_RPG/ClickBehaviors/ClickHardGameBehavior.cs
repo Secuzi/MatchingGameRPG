@@ -29,7 +29,7 @@ namespace Matching_RPG.ClickBehaviors
                 GameLevels.Hide();
                 if (HardGame.IsDisposed)
                 {
-                    HardGame = new Game(instanceOfSkulls: 6, numberOfNiglets: 9, gameLevelsForm: GameLevels);
+                    HardGame = new Game(instanceOfSkulls: 6, numberOfCubies: 9, gameLevelsForm: GameLevels);
                     HardGame.Cursor = new Cursor(Resources.defaultIcon.Handle);
 
                     HardGame.ShowDialog();

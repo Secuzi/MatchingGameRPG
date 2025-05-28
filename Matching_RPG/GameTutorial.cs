@@ -19,7 +19,7 @@ namespace Matching_RPG
 		const int HEIGHT = 720;
 		DrawText goBack, label1, label2, label3;
 		GameBin trashcan;
-		Niglet skullNiglet;
+		Cuby skullCuby;
 		CustomFont customFont;
 		GameMenu gameMenu;
 		public GameTutorial()
@@ -68,7 +68,7 @@ namespace Matching_RPG
 			};
 			label3.ChangeFontSize(96);
 
-			skullNiglet = new Niglet(1119, 186, 64, 64, "skull-export");
+			skullCuby = new Cuby(1119, 186, 64, 64, "skull-export");
 
 			trashcan = new GameBin(this, 2);
 			trashcan.ObjectPositionX = 1023;
@@ -78,7 +78,7 @@ namespace Matching_RPG
 
 			this.Paint += gameMenu.Draw;
 			this.Paint += trashcan.Draw;
-			this.Paint += skullNiglet.Draw;
+			this.Paint += skullCuby.Draw;
 			this.Paint += label1.OnTextDrawPixels;
 			this.Paint += label2.OnTextDrawPixels;
 			this.Paint += label3.OnTextDrawPixels;

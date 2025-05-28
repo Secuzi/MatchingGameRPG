@@ -31,7 +31,7 @@ namespace Matching_RPG.ClickBehaviors
                 GameLevels.Hide();
                 if (NormalGame.IsDisposed)
                 {
-                    NormalGame = new Game(instanceOfSkulls: 3, numberOfNiglets: 9, gameLevelsForm: GameLevels);
+                    NormalGame = new Game(instanceOfSkulls: 3, numberOfCubies: 9, gameLevelsForm: GameLevels);
                     NormalGame.Cursor = new Cursor(Resources.defaultIcon.Handle);
 
                     NormalGame.ShowDialog();

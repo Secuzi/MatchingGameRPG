@@ -12,28 +12,28 @@ namespace Matching_RPG.Implementation_Classes
 {
 	public class GameLogic
 	{
-		List<string> NigletPath { get; set; }
+		List<string> cubyPath { get; set; }
 		GameObject World { get; set; }
 		List<Tile> CompletedTiles { get; set; }
-		List<Niglet> Niglets { get; set; }
+		List<Cuby> Cubies { get; set; }
         public GameLogic()
         {
             
         }
-        public List<Niglet> CreateNiglets(int maxNiglets)
+        public List<Cuby> CreateCubies(int maxCubies)
 		{
 			Random rnd = new Random();
-			var niglets = new List<Niglet>();
+			var cubies = new List<Cuby>();
 			var usedIds = new HashSet<int>(); // Set to store used IDs
 		
 			
 
-			if (NigletPath is null)
+			if (cubyPath is null)
 			{
 				return null;
 			}
 
-			for (int i = 0; i < maxNiglets; i++)
+			for (int i = 0; i < maxCubies; i++)
 			{
 				int id;
 				do
@@ -43,22 +43,22 @@ namespace Matching_RPG.Implementation_Classes
 
 				int skin = rnd.Next(0, 4);
 
-				niglets.Add(new Niglet
+				cubies.Add(new Cuby
 				{
 					ID = id,
-					ObjectImage = Image.FromFile(NigletPath[skin]),
+					ObjectImage = Image.FromFile(cubyPath[skin]),
 				});
 
 				usedIds.Add(id); // Add the ID to the used IDs set
 			}
 
-			return niglets;
+			return cubies;
 
 		}
 
-		public void GetNigletPath(IEnumerable<string> nigletPath)
+		public void GetCubyPath(IEnumerable<string> cubyPath)
 		{
-			this.NigletPath = nigletPath.ToList() ;
+			this.cubyPath = cubyPath.ToList() ;
 		}
 		public List<Tile> GetTiles(int numberOfTiles, int positionX, int positionY)
 		{
@@ -85,39 +85,38 @@ namespace Matching_RPG.Implementation_Classes
 
 			return tiles;
 		}
-		public Niglet GetNilget(List<Niglet> niglets, Player player, double instanceOfSkull)
+		public Cuby GetNilget(List<Cuby> cubies, Player player, double instanceOfSkull)
 		{
 			Random rnd = new Random();
-			Niglet niglet;
-			if (niglets.Count == 0)
+			Cuby cuby;
+			if (cubies.Count == 0)
 			{
-				return niglets[0];
+				return cubies[0];
 			}
 
-			double skullChance = instanceOfSkull / niglets.Count;
+			double skullChance = instanceOfSkull / cubies.Count;
 
 			double generatedRandomValue = rnd.NextDouble();
 
 			if (generatedRandomValue <= skullChance)
 			{
-				niglet = new Niglet()
+				cuby = new Cuby()
 				{
-					ObjectImage = Image.FromFile(NigletPath[4])
+					ObjectImage = Image.FromFile(cubyPath[4])
 				};
 				player.IsPlayerHolding = true;
-				niglet.IsPicked = true;
-				niglet.IsSkull = true;
-				return niglet;
+				cuby.IsPicked = true;
+				cuby.IsSkull = true;
+				return cuby;
 			}
 
 
 			do
 			{
-				//Create a function or something na mo get sa percentage sa skull niglet
-				niglet = niglets[rnd.Next(0, niglets.Count)];
-				if (niglet.IsPicked == false)
+				cuby = cubies[rnd.Next(0, cubies.Count)];
+				if (cuby.IsPicked == false)
 				{
-					niglet.IsPicked = true;
+					cuby.IsPicked = true;
 					player.IsPlayerHolding = true;
 				
 					break;
@@ -127,27 +126,27 @@ namespace Matching_RPG.Implementation_Classes
 					continue;
 				}
 
-			} while (niglet.IsPicked == true);
-			return niglet;
+			} while (cuby.IsPicked == true);
+			return cuby;
 		}
-		public void SetPuzzle(List<Tile> tiles, List<Niglet> niglets, int numberOfTiles)
+		public void SetPuzzle(List<Tile> tiles, List<Cuby> cubies, int numberOfTiles)
 		{
 			var rnd = new Random();
 			for (int i = 0; i < numberOfTiles; i++)
 			{
-				tiles[i].ID = niglets[i].ID;
+				tiles[i].ID = cubies[i].ID;
 			}
 		}
 
-		public bool CheckIfPlayerLose(List<Tile> tiles, List<Niglet> placedNiglets, bool isGameOver)
+		public bool CheckIfPlayerLose(List<Tile> tiles, List<Cuby> placedCubies, bool isGameOver)
 		{
 			bool isPlacedCorrectly = false;
 			if (tiles is null) { MessageBox.Show("tiles is null"); return false; }
-			if (placedNiglets is null) { MessageBox.Show("Placed niglets is false"); return false; }
+			if (placedCubies is null) { MessageBox.Show("Placed cubies is false"); return false; }
 			if (isGameOver) return false;
 			for(int i = 0; i < tiles.Count; i++)
 			{
-				if (tiles[i].ID == tiles[i].PlacedNiglet.ID)
+				if (tiles[i].ID == tiles[i].PlacedCuby.ID)
 				{
 					isPlacedCorrectly = true;
 					continue;

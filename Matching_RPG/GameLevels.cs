@@ -54,7 +54,7 @@ namespace Matching_RPG
             };
 			easyButton.ChangeFontSize(96);
 			easyButton.SetTextBox(236, 89);
-			easyButton.AssignClickBehavior(new ClickEasyGameBehavior(new Game(instanceOfSkulls: 1, numberOfNiglets: 9, gameLevelsForm: this), this, easyButton));
+			easyButton.AssignClickBehavior(new ClickEasyGameBehavior(new Game(instanceOfSkulls: 1, numberOfCubies: 9, gameLevelsForm: this), this, easyButton));
 
             normalButton = new DrawText(gameMenu, "NORMAL", customFont, Color.FromArgb(236, 226, 107))
             {
@@ -63,7 +63,7 @@ namespace Matching_RPG
             };
             normalButton.ChangeFontSize(96);
             normalButton.SetTextBox(356, 89);
-            normalButton.AssignClickBehavior(new ClickNormalGameBehavior(new Game(instanceOfSkulls: 3, numberOfNiglets: 9, gameLevelsForm: this), this, normalButton));
+            normalButton.AssignClickBehavior(new ClickNormalGameBehavior(new Game(instanceOfSkulls: 3, numberOfCubies: 9, gameLevelsForm: this), this, normalButton));
 
             //
             hardButton = new DrawText(gameMenu, "HARD", customFont, Color.FromArgb(236, 226, 107))
@@ -73,7 +73,7 @@ namespace Matching_RPG
             };
             hardButton.ChangeFontSize(96);
             hardButton.SetTextBox(231, 89);
-            hardButton.AssignClickBehavior(new ClickHardGameBehavior(new Game(instanceOfSkulls: 6, numberOfNiglets: 9, gameLevelsForm: this), this, hardButton));
+            hardButton.AssignClickBehavior(new ClickHardGameBehavior(new Game(instanceOfSkulls: 6, numberOfCubies: 9, gameLevelsForm: this), this, hardButton));
 
 
 
@@ -108,21 +108,7 @@ namespace Matching_RPG
         }
 
 
-		//switch (btn.Tag)
-		//	{
-		//		case "easy":
-		//			game = new Game(instanceOfSkulls: 1, numberOfNiglets: 9, gameLevelsForm: this);
-		//			break;
-		//		case "medium":
-		//			game = new Game(instanceOfSkulls: 3, numberOfNiglets: 9, gameLevelsForm: this);
-				
-		//			break;
-		//		case "hard":
-		//			game = new Game(instanceOfSkulls: 6, numberOfNiglets: 9, gameLevelsForm: this);
 
-		//			break;
-		//	}
- 
 		private void GameLevels_Load(object sender, EventArgs e)
 		{
 			Init();

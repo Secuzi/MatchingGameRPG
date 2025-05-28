@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animate.cs" />
-    <Compile Include="Assets.cs" />
     <Compile Include="ClickBehaviors\ClickEasyGameBehavior.cs" />
     <Compile Include="ClickBehaviors\ClickExitGameBehavior.cs" />
     <Compile Include="ClickBehaviors\ClickHardGameBehavior.cs" />
@@ -86,7 +85,7 @@
     <Compile Include="Implementation Classes\GameTable.cs" />
     <Compile Include="Implementation Classes\GameTree.cs" />
     <Compile Include="Implementation Classes\Input.cs" />
-    <Compile Include="Implementation Classes\Niglet.cs" />
+    <Compile Include="Implementation Classes\Cuby.cs" />
     <Compile Include="Implementation Classes\Player.cs" />
     <Compile Include="Abstract Classes\Vector.cs" />
     <Compile Include="Abstract Classes\GameObject.cs" />

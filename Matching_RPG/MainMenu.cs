@@ -22,7 +22,7 @@ namespace Matching_RPG
 		CustomFont customFont;
 		GameMenuCat cat;
 		GameTable table;
-		Niglet greenNiglet, orangeNiglet, yellowNiglet, redNiglet;
+		Cuby greenCuby, orangeCuby, yellowCuby, redCuby;
 		//public List<Action<object, PaintEventArgs>> paints { get; set; }
 		public List<MouseEventHandler> Clicks { get; set; }
 		public Timer GameTimer { get; set; }
@@ -56,7 +56,7 @@ namespace Matching_RPG
 			titleButton1.ChangeFontSize(96);
 			titleButton1.ChangeX(93);
 			titleButton1.ChangeY(47);
-			titleButton2 = new DrawText(gameMenu, "NIGLETS", customFont, Color.FromArgb(236, 226, 107));
+			titleButton2 = new DrawText(gameMenu, "CUBIES", customFont, Color.FromArgb(236, 226, 107));
 			titleButton2.ChangeFontSize(96);
 			titleButton2.ChangeX(93);
 			titleButton2.ChangeY(136);
@@ -83,10 +83,10 @@ namespace Matching_RPG
 			exitButton.SetTextBox(148, 59);
 			exitButton.AssignClickBehavior(new GoBackBehavior(this, exitButton));
 			cat = new GameMenuCat(798, 209);
-			greenNiglet = new Niglet(685, 456, 64, 64, "lightgreen-export");
-			orangeNiglet = new Niglet(805, 456, 64, 64, "orange-export");
-			yellowNiglet = new Niglet(925, 456, 64, 64, "ryellow-export");
-			redNiglet = new Niglet(1045, 456, 64, 64, "red-export");
+			greenCuby = new Cuby(685, 456, 64, 64, "lightgreen-export");
+			orangeCuby = new Cuby(805, 456, 64, 64, "orange-export");
+			yellowCuby = new Cuby(925, 456, 64, 64, "ryellow-export");
+			redCuby = new Cuby(1045, 456, 64, 64, "red-export");
 			Clicks = new List<MouseEventHandler>()
 			{
 				playButton.Click,
@@ -113,10 +113,10 @@ namespace Matching_RPG
 			this.Paint += exitButton.OnTextDrawPixels;
 			this.Paint += cat.Draw;
 			this.Paint += table.Draw;
-			this.Paint += greenNiglet.Draw;
-			this.Paint += orangeNiglet.Draw;
-			this.Paint += yellowNiglet.Draw;
-			this.Paint += redNiglet.Draw;
+			this.Paint += greenCuby.Draw;
+			this.Paint += orangeCuby.Draw;
+			this.Paint += yellowCuby.Draw;
+			this.Paint += redCuby.Draw;
 		}
 		private void gameTimer_Tick(object sender, EventArgs e)
 		{

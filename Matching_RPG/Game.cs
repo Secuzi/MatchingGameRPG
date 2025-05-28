@@ -17,7 +17,7 @@ namespace Matching_RPG
 	public partial class Game : Form
 	{
 		public double InstanceOfSkulls { get; set; }
-		public int NumberOfNiglets { get; set; }
+		public int NumberOfCubies { get; set; }
 		GameLevels GameLevels { get; set; }
 		Player player;
 		int frameStep;
@@ -37,8 +37,8 @@ namespace Matching_RPG
 		GameLogic gameLogic;
 		Vector fromPlayerToChest;
 		List<GameObject> gameObjects;
-		List<Niglet> niglets;
-		List<Niglet> placedNiglets;
+		List<Cuby> cubies;
+		List<Cuby> placedCubies;
 		List<Tile> tiles;
 		List<Tile> completedTiles;
 		List<Vector> fromPlayerToTiles;
@@ -46,7 +46,7 @@ namespace Matching_RPG
 		EntitiesManager entitiesManager;
 		bool isColliding;
 		int centerTileDistance;
-		Niglet currentNiglet;
+		Cuby currentCuby;
 		int startFrame = 0;
 		int endFrame = 0;
 		Input playerInput;
@@ -78,12 +78,12 @@ namespace Matching_RPG
 		bool canPlayerExit;
 		const int GameDuration = 120;
 
-		public Game(int instanceOfSkulls, int numberOfNiglets, GameLevels gameLevelsForm)
+		public Game(int instanceOfSkulls, int numberOfCubies, GameLevels gameLevelsForm)
 		{
 			InitializeComponent();
 
 			this.InstanceOfSkulls = instanceOfSkulls;
-			this.NumberOfNiglets = numberOfNiglets;
+			this.NumberOfCubies = numberOfCubies;
 			this.GameLevels = gameLevelsForm;
 		}
 		public void InitializeDisplay()
@@ -267,12 +267,12 @@ namespace Matching_RPG
 				player = player
 			};
 			gameLogic = new GameLogic();
-			gameLogic.GetNigletPath(Directory.GetFiles("Niglets", "*.png").ToList());
-			niglets = new List<Niglet>();
-			niglets = gameLogic.CreateNiglets(this.NumberOfNiglets);
-			currentNiglet = new Niglet();
-			currentNiglet = null;
-			placedNiglets = new List<Niglet>();
+			gameLogic.GetCubyPath(Directory.GetFiles("Cubies", "*.png").ToList());
+			cubies = new List<Cuby>();
+			cubies = gameLogic.CreateCubies(this.NumberOfCubies);
+			currentCuby = new Cuby();
+			currentCuby = null;
+			placedCubies = new List<Cuby>();
 
 			timerText = new DrawText(overworldWaterFloor, "", customFont, Color.FromArgb(200, 124, 134));
 			timerText.ChangeX(overworldWaterFloor.ObjectWidth - 300);
@@ -318,11 +318,11 @@ namespace Matching_RPG
 			{
 				fromPlayerToTiles.Add(new Vector());
 			}
-			gameLogic.SetPuzzle(tiles, niglets, 9);
+			gameLogic.SetPuzzle(tiles, cubies, 9);
 			//completedTiles = new 
 			completedTiles = gameLogic.GetTiles(9, overworldFenceTopLeftRight.ObjectPositionX + 50, overworldFenceTopLeftRight.ObjectPositionY + 150);
 		
-			SupplyTilesWithNiglets();
+			SupplyTilesWithCubies();
 			completedTiles.ForEach(tile => gameObjects.Add(tile));
 
 			chest.RandomizeChestPosition(gameObjects, overworldFenceTopLeftRight.ObjectPositionX,
@@ -334,7 +334,7 @@ namespace Matching_RPG
 			this.KeyUp += OnKeyUp;
 			this.MouseUp += OnMouseUp;
 			this.Paint += OnFormDraw;
-			this.Paint += CompletedNigletsDraw;
+			this.Paint += CompletedCubiesDraw;
 			this.Paint += trashcan.Draw;
 			this.Paint += OnPlayerDraw;
 			this.Paint += OnLowerFenceDraw;
@@ -343,29 +343,29 @@ namespace Matching_RPG
 			
 		}
 
-		private void SupplyTilesWithNiglets()
+		private void SupplyTilesWithCubies()
 		{
 			for (int i = 0; i < completedTiles.Count; i++)
 			{
-				Niglet tempNiglet = new Niglet()
+				Cuby tempCuby = new Cuby()
 				{
-					ObjectImage = niglets[i].ObjectImage,
+					ObjectImage = cubies[i].ObjectImage,
 					ObjectPositionX = completedTiles[i].ObjectPositionX,
 					ObjectPositionY = completedTiles[i].ObjectPositionY,
 
 				};
-				completedTiles[i].PlacedNiglet = tempNiglet;
+				completedTiles[i].PlacedCuby = tempCuby;
 
 			}
 		}
 
-		private void CompletedNigletsDraw(object sender, PaintEventArgs e)
+		private void CompletedCubiesDraw(object sender, PaintEventArgs e)
 		{
 			completedTiles.ForEach(tile =>
 			{
-				if (tile != null && tile.ObjectImage != null && tile.PlacedNiglet != null && tile.PlacedNiglet.ObjectImage != null)
+				if (tile != null && tile.ObjectImage != null && tile.PlacedCuby != null && tile.PlacedCuby.ObjectImage != null)
 				{
-					e.Graphics.DrawImage(tile.PlacedNiglet.ObjectImage, tile.ObjectPositionX + tile.PlacedNiglet.ObjectWidth / 5, tile.ObjectPositionY + tile.PlacedNiglet.ObjectHeight / 5, tile.PlacedNiglet.ObjectWidth, tile.PlacedNiglet.ObjectHeight);
+					e.Graphics.DrawImage(tile.PlacedCuby.ObjectImage, tile.ObjectPositionX + tile.PlacedCuby.ObjectWidth / 5, tile.ObjectPositionY + tile.PlacedCuby.ObjectHeight / 5, tile.PlacedCuby.ObjectWidth, tile.PlacedCuby.ObjectHeight);
 				}
 				
 			});
@@ -415,18 +415,18 @@ namespace Matching_RPG
 		}
 		private void GetStars()
 		{
-			if (placedNiglets.Count <= 0)
+			if (placedCubies.Count <= 0)
 			{
 				return;
 			}
-			switch (placedNiglets.Count % 3)
+			switch (placedCubies.Count % 3)
 			{
 				case 2:
-					if (placedNiglets.Count <= 3)
+					if (placedCubies.Count <= 3)
 					{
 						star1.ObjectImage = Image.FromFile("stars/starShadowHalf.png");
 					}
-					else if (placedNiglets.Count > 3 && placedNiglets.Count <= 6)
+					else if (placedCubies.Count > 3 && placedCubies.Count <= 6)
 					{
 						star2.ObjectImage = Image.FromFile("stars/starShadowHalf.png");
 					}
@@ -437,11 +437,11 @@ namespace Matching_RPG
 					break;
 				case 0:
 
-					if (placedNiglets.Count <= 3)
+					if (placedCubies.Count <= 3)
 					{
 						star1.ObjectImage = Image.FromFile("stars/starShadowFilled.png");
 					}
-					else if (placedNiglets.Count > 3 && placedNiglets.Count <= 6)
+					else if (placedCubies.Count > 3 && placedCubies.Count <= 6)
 					{
 						star2.ObjectImage = Image.FromFile("stars/starShadowFilled.png");
 					}
@@ -511,17 +511,17 @@ namespace Matching_RPG
 			if (canPlayerExit && player.IsEnterPressed)
 			{
 				chest = null;
-				currentNiglet = null;
+				currentCuby = null;
 				gameLoop.Stop();
 				cursorTimer.Stop();
 				animationTimer.Stop();
-				placedNiglets.Clear();
-				niglets.Clear();
-				niglets.ForEach(niglet => niglet.Dispose());
+				placedCubies.Clear();
+				cubies.Clear();
+				cubies.ForEach(cuby => cuby.Dispose());
 				gameObjects.ForEach(gameObject => gameObject.Dispose());
 				player.Dispose();
 				tiles.ForEach(tile => tile.Dispose());
-				placedNiglets.ForEach(placedNiglet => placedNiglet.Dispose());
+				placedCubies.ForEach(placedCuby => placedCuby.Dispose());
 
 				foreach (Control control in Controls)
 				{
@@ -539,13 +539,12 @@ namespace Matching_RPG
 				timerText.SetValue($"Time: {countDownTimerObject.Minute}:0{countDownTimerObject.Seconds}");
 			}
 			this.Text = $"{player.ObjectPositionX}, {player.ObjectPositionY}";
-			//Naa sa babaw sa player ang niglet
 			if (player.IsPlayerHolding)
 			{
-				int newNigletPosX = player.ObjectPositionX + player.ObjectWidth / 2 - (currentNiglet.ObjectWidth / 2);
-				int newNigletPosy = player.ObjectPositionY - currentNiglet.ObjectHeight;
+				int newCubyPosX = player.ObjectPositionX + player.ObjectWidth / 2 - (currentCuby.ObjectWidth / 2);
+				int newCubyPosy = player.ObjectPositionY - currentCuby.ObjectHeight;
 
-				currentNiglet.UpdateSolidHitBoxCoordinates(newNigletPosX, newNigletPosy);
+				currentCuby.UpdateSolidHitBoxCoordinates(newCubyPosX, newCubyPosy);
 			}
 	
 
@@ -601,7 +600,7 @@ namespace Matching_RPG
 			
 			playerVector = new Vector(player.SolidHitbox.X + (player.SolidHitbox.Width / 2), player.SolidHitbox.Y + (player.SolidHitbox.Height / 2));
 			
-			trashcan.Update(currentNiglet, playerVector);
+			trashcan.Update(currentCuby, playerVector);
 			
 			if (chest != null)
 			{
@@ -618,7 +617,7 @@ namespace Matching_RPG
 			centerTileDistance = (int)fromPlayerToCenterTileVector.Length();
 
 			distance = (int)fromPlayerToChest.Length();
-			if (placedNiglets.Count == niglets.Count && !IsGameOverAsyncOngoing)
+			if (placedCubies.Count == cubies.Count && !IsGameOverAsyncOngoing)
 			{
 				GameOverAsync();
 			}
@@ -630,7 +629,7 @@ namespace Matching_RPG
 			
 			chest = null;
 			
-			bool ifWon = gameLogic.CheckIfPlayerLose(tiles, placedNiglets, countDownTimerObject.isGameOver);
+			bool ifWon = gameLogic.CheckIfPlayerLose(tiles, placedCubies, countDownTimerObject.isGameOver);
 
 			return ifWon;
 		}
@@ -820,7 +819,7 @@ namespace Matching_RPG
 
 				chest.CanOpenChest = true;
 			}
-			else if (centerTileDistance < 120 && player.IsPlayerHolding && currentNiglet.IsSkull == false)
+			else if (centerTileDistance < 120 && player.IsPlayerHolding && currentCuby.IsSkull == false)
 			{
 				//Make a delegate for this mo return ug cursor and mo 
 				this.Cursor = new Cursor(Resources.interactableIcon.Handle);
@@ -858,21 +857,21 @@ namespace Matching_RPG
 					continue;
 				}
 
-				if (tiles[i].ID == currentNiglet.ID)
+				if (tiles[i].ID == currentCuby.ID)
 				{
-					mouseVector.X = tiles[i].ObjectPositionX + (tiles[i].SolidHitbox.Width / 2) - (currentNiglet.ObjectWidth / 2);
-					mouseVector.Y = tiles[i].ObjectPositionY + (tiles[i].SolidHitbox.Height / 2) - currentNiglet.ObjectHeight / 2;
-					currentNiglet.UpdateSolidHitBoxCoordinates((int)mouseVector.X, (int)mouseVector.Y);
-					currentNiglet.ObjectPositionX = currentNiglet.SolidHitbox.X;
-					currentNiglet.ObjectPositionY = currentNiglet.SolidHitbox.Y;
-					placedNiglets.Add(currentNiglet);
-					tiles[i].PlacedNiglet = currentNiglet;
+					mouseVector.X = tiles[i].ObjectPositionX + (tiles[i].SolidHitbox.Width / 2) - (currentCuby.ObjectWidth / 2);
+					mouseVector.Y = tiles[i].ObjectPositionY + (tiles[i].SolidHitbox.Height / 2) - currentCuby.ObjectHeight / 2;
+					currentCuby.UpdateSolidHitBoxCoordinates((int)mouseVector.X, (int)mouseVector.Y);
+					currentCuby.ObjectPositionX = currentCuby.SolidHitbox.X;
+					currentCuby.ObjectPositionY = currentCuby.SolidHitbox.Y;
+					placedCubies.Add(currentCuby);
+					tiles[i].PlacedCuby = currentCuby;
 					player.IsPlayerHolding = false;
 					this.MouseUp -= OnTileClick;
 					this.Paint -= OnPlayerHold;
-					gameObjects.Insert(gameObjects.Count - 1, currentNiglet);
+					gameObjects.Insert(gameObjects.Count - 1, currentCuby);
 
-					if (placedNiglets.Count < 9)
+					if (placedCubies.Count < 9)
 					{
 						ChestSpawn();
 					}
@@ -887,10 +886,10 @@ namespace Matching_RPG
 		public void OnPlayerHold(object senderObject, PaintEventArgs paint)
 		{
 
-			if (currentNiglet != null && currentNiglet.ObjectImage != null)
+			if (currentCuby != null && currentCuby.ObjectImage != null)
 			{
-				paint.Graphics.DrawImage(currentNiglet.ObjectImage, currentNiglet.SolidHitbox.X,
-			currentNiglet.SolidHitbox.Y, currentNiglet.ObjectWidth, currentNiglet.ObjectHeight);
+				paint.Graphics.DrawImage(currentCuby.ObjectImage, currentCuby.SolidHitbox.X,
+			currentCuby.SolidHitbox.Y, currentCuby.ObjectWidth, currentCuby.ObjectHeight);
 
 			}
 
@@ -918,9 +917,9 @@ namespace Matching_RPG
 			{
 				return;
 			}
-			if (placedNiglets.Count < niglets.Count)
+			if (placedCubies.Count < cubies.Count)
 			{
-				currentNiglet = gameLogic.GetNilget(niglets, player, this.InstanceOfSkulls);
+				currentCuby = gameLogic.GetNilget(cubies, player, this.InstanceOfSkulls);
 				
 			}
 			else
@@ -931,7 +930,7 @@ namespace Matching_RPG
 			}
 			chest.ObjectImage = null;
 			chest.SolidHitbox = new Rectangle();
-			if (currentNiglet.IsSkull)
+			if (currentCuby.IsSkull)
 			{
 				this.MouseUp += trashcan.OnTrashClick;
 			}

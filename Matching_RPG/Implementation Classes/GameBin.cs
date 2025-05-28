@@ -12,7 +12,7 @@ namespace Matching_RPG.Implementation_Classes
 		public readonly string FilePath = @"trashbin.png";
 		public readonly int PositionX = 1104;
 		public readonly int PositionY = 392;
-		public Niglet Niglet { get; set; }
+		public Cuby Cuby { get; set; }
 		public Vector BinVector { get; set; }
 		public Vector MouseVector { get; set; }
 		public Player player { get; set; }
@@ -56,19 +56,19 @@ namespace Matching_RPG.Implementation_Classes
 			BinVector = new Vector(this.SolidHitbox.X + (SolidHitbox.Width / 2), SolidHitbox.Y + (SolidHitbox.Height / 2));
 
 		}
-		public void Update(Niglet niglet,Vector playerVector)
+		public void Update(Cuby cuby,Vector playerVector)
 		{
 			this.playerVector = playerVector;
 			fromPlayerTobin = (int)CalculateDistanceFromPlayerToTrashCan();
 
-			if (niglet is null || playerVector is null)
+			if (cuby is null || playerVector is null)
 			{
 				return;
 			}
 
-			if (niglet.IsSkull)
+			if (cuby.IsSkull)
 			{
-				this.Niglet = niglet;
+				this.Cuby = cuby;
 			}
 
 		}
@@ -94,9 +94,9 @@ namespace Matching_RPG.Implementation_Classes
 			{
 				return;
 			}
-			if (Niglet.IsSkull)
+			if (Cuby.IsSkull)
 			{
-				Niglet = null;
+				Cuby = null;
 			}
 			player.IsPlayerHolding = false;
 			ChestSpawnCallBack?.Invoke();
